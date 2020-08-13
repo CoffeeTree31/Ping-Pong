@@ -48,22 +48,22 @@ rocket_b.up()
 rocket_b.goto(450, 0)
 
 def move_up_a():
-    y = rocket_a.ycor() + 10
+    y = rocket_a.ycor() + 15
     if y > 260:
         y = 260
     rocket_a.sety(y)
 def move_down_a():
-    y = rocket_a.ycor() - 10
+    y = rocket_a.ycor() - 15
     if y < -260:
         y = -260
     rocket_a.sety(y)
 def move_up_b():
-    yb = rocket_b.ycor() + 10
+    yb = rocket_b.ycor() + 15
     if yb > 260:
         yb = 260
     rocket_b.sety(yb)
 def move_down_b():
-    yb = rocket_b.ycor() - 10
+    yb = rocket_b.ycor() - 15
     if yb < -260:
         yb = -260
     rocket_b.sety(yb)
@@ -80,19 +80,51 @@ ball.sety(random.randint(-150, 150))
 
 window.update()
 
+FONT = 'Arial', 44
 speed = [0.6, 0.7, 0.75, -0.6, -0.7, -0.75]
+
+score_a = 0
+score_b = 0
+
+s1 = turtle.Turtle()
+s1.penup()
+s1.hideturtle()
+s1.color('white')
+s1.goto(-200, 300)
+s1.write(score_a, font=FONT)
+
+s2 = turtle.Turtle()
+s2.penup()
+s2.hideturtle()
+s2.color('white')
+s2.goto(200, 300)
+s2.write(score_b, font=FONT)
+
+
 
 while True:
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
     if ball.ycor() >= 290 or ball.ycor()<= -290:
         ball.dy = -ball.dy
-    if ball.xcor() >= 490 or ball.xcor() <= -490:
+    if ball.xcor() >= 490:
         ball.goto(0, 0)
         rocket_a.sety(0)
         rocket_b.sety(0)
         ball.dx = random.choice(speed)
         ball.dy = random.choice(speed)
+        score_a += 1
+        s1.clear()
+        s1.write(score_a, font=FONT)
+    if ball.xcor() <= -490:
+        ball.goto(0, 0)
+        rocket_a.sety(0)
+        rocket_b.sety(0)
+        ball.dx = random.choice(speed)
+        ball.dy = random.choice(speed)
+        score_b += 1
+        s2.clear()
+        s2.write(score_b, font=FONT)
     if ball.ycor() >= rocket_a.ycor() - 50 and ball.ycor() <= rocket_a.ycor() + 50 and ball.xcor() >= rocket_a.xcor() - 5 and ball.xcor() <= rocket_a.xcor() + 5:
         ball.dx = -ball.dx
     if ball.ycor() >= rocket_b.ycor() - 50 and ball.ycor() <= rocket_b.ycor() + 50 and ball.xcor() >= rocket_b.xcor() - 5 and ball.xcor() <= rocket_b.xcor() + 5:
